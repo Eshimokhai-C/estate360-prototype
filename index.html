@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Estate360 — Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}}</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script id="tailwind-config">
+tailwind.config = { theme: { extend: {
+  colors: {
+    background:"#F5F6F7", surface:"#FFFFFF", ink:"#1B2430", "ink-variant":"#5B6472",
+    border:"#E2E8F0", primary:"#0F6B5C", "primary-deep":"#0A4D42", secondary:"#B87A1F"
+  },
+  fontFamily: { sans:["Inter","system-ui","sans-serif"] }
+}}};
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24;}
+  .role-pill{transition:all .15s ease;}
+  .role-pill:hover{border-color:#0F6B5C;background:#0F6B5C0d;transform:translateY(-1px);}
+</style>
+</head>
+<body class="bg-background font-sans text-ink antialiased min-h-screen flex items-center justify-center px-6 py-12">
+
+<div class="w-full max-w-md flex flex-col items-center">
+
+  <!-- Logo mark -->
+  <svg viewBox="0 0 120 120" width="56" height="56" fill="none" class="mb-4">
+    <rect width="120" height="120" rx="24" fill="#0F6B5C"/>
+    <path d="M60 22L92 40V78L60 96L28 78V40L60 22Z" stroke="#B87A1F" stroke-width="4" stroke-linejoin="round" fill="#0c564a"/>
+    <path d="M60 22L60 96" stroke="#B87A1F" stroke-width="3" stroke-linecap="round"/>
+    <path d="M60 60L92 40" stroke="#B87A1F" stroke-width="3" stroke-linecap="round"/>
+    <path d="M60 60L28 40" stroke="#B87A1F" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="60" cy="60" r="14" fill="#B87A1F"/>
+    <circle cx="60" cy="60" r="7" fill="#F5F6F7"/>
+    <path d="M82 68L82 78L60 91L38 78L38 68" stroke="#F5F6F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h1 class="text-xl font-bold tracking-tight">Estate360</h1>
+  <p class="text-sm text-ink-variant mb-8">Enterprise Ops · Sign in to your workspace</p>
+
+  <!-- Login card -->
+  <form id="loginForm" class="w-full bg-surface border border-border rounded-xl shadow-sm p-6 flex flex-col gap-4">
+    <div class="flex flex-col gap-1.5">
+      <label class="text-xs font-semibold uppercase tracking-wide text-ink-variant">Email</label>
+      <input type="email" value="tunde.adeyemi@estate360.ng" class="h-11 px-3 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-xs font-semibold uppercase tracking-wide text-ink-variant">Password</label>
+      <input type="password" value="••••••••••" class="h-11 px-3 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
+    </div>
+    <button type="submit" class="h-11 mt-1 bg-primary hover:bg-primary-deep text-white rounded-lg font-semibold text-sm shadow-sm transition-all">
+      Sign In
+    </button>
+    <p class="text-[11px] text-center text-ink-variant leading-relaxed">
+      Demo build — authentication is illustrative only. Pick a role below to jump straight into that workspace.
+    </p>
+  </form>
+
+  <!-- Role switcher -->
+  <div class="w-full mt-8">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-ink-variant">Demo — choose a role</span>
+      <div class="flex-1 h-px bg-border"></div>
+    </div>
+    <div id="rolePills" class="grid grid-cols-2 gap-2"></div>
+  </div>
+
+  <p class="text-[11px] text-ink-variant mt-10">Estate360 · Nigerian real estate operations platform · Prototype build</p>
+</div>
+
+<script src="js/app.js?v=15"></script>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    Estate360SetRole("management");
+    window.location.href = "dashboard.html";
+  });
+
+  var container = document.getElementById("rolePills");
+  Object.keys(Estate360Roles).forEach(function (id) {
+    var role = Estate360Roles[id];
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "role-pill flex flex-col items-start gap-0.5 text-left px-3.5 py-2.5 rounded-lg border border-border bg-white";
+    btn.innerHTML = "<span class='text-sm font-semibold'>" + role.label + "</span>" +
+      "<span class='text-[11px] text-ink-variant'>" + role.name + "</span>";
+    btn.addEventListener("click", function () {
+      Estate360SetRole(id);
+      window.location.href = "dashboard.html";
+    });
+    container.appendChild(btn);
+  });
+</script>
+</body>
+</html>
